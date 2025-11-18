@@ -8,12 +8,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
 
-    if (empty($id) || empty($name)) {
-        echo json_encode(['success' => false, 'message' => 'ID and Name are required']);
+    // Debug: Log data yang diterima
+    error_log("Received data - ID: $id, Name: $name, Description: $description");
+
+    if (empty($id)) {
+        echo json_encode(['success' => false, 'message' => 'ID is required']);
+        exit;
+    }
+
+    if (empty($name)) {
+        echo json_encode(['success' => false, 'message' => 'Name is required']);
         exit;
     }
 
     try {
+        // PERBAIKAN: Gunakan id_category di WHERE clause
         $stmt = $pdo->prepare("UPDATE category SET name = :name, description = :description WHERE id_category = :id");
         $result = $stmt->execute([
             ':id' => $id,
@@ -21,17 +30,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':description' => $description
         ]);
 
-        if ($result) {
+        if ($result && $stmt->rowCount() > 0) {
             echo json_encode([
                 'success' => true,
                 'category' => [
-                    // 'id' => $id,
+                    'id' => $id,
                     'name' => $name,
                     'description' => $description
                 ]
             ]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update category']);
+            // Cek apakah kategori dengan ID tersebut ada
+            $checkStmt = $pdo->prepare("SELECT * FROM category WHERE id_category = :id");
+            $checkStmt->execute([':id' => $id]);
+            
+            if ($checkStmt->rowCount() === 0) {
+                echo json_encode(['success' => false, 'message' => 'Category not found with ID: ' . $id]);
+            } else {
+                // Data tidak berubah (update dengan nilai yang sama)
+                echo json_encode([
+                    'success' => true,
+                    'category' => [
+                        'id' => $id,
+                        'name' => $name,
+                        'description' => $description
+                    ]
+                ]);
+            }
         }
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);

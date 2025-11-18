@@ -291,13 +291,14 @@ $categories = $stmt->fetchAll();
                   <tbody id="category-table" class="bg-white divide-y divide-gray-200">
                     <?php
                     try {
-                      $stmt = $pdo->query("SELECT * FROM category ORDER BY name ASC");
+                      // PERBAIKAN: Gunakan id_category
+                      $stmt = $pdo->query("SELECT id_category, name, description FROM category ORDER BY name ASC");
                       $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                       if (count($categories) > 0) {
                         foreach ($categories as $category) {
-                          // Pastikan semua nilai tidak null
-                          $id = $category['id'] ?? '';
+                          // PERBAIKAN: Ambil id_category
+                          $id = $category['id_category'] ?? '';
                           $name = $category['name'] ?? '';
                           $description = $category['description'] ?? '';
                     ?>
@@ -316,6 +317,7 @@ $categories = $stmt->fetchAll();
                             <td class="p-4 space-x-2 whitespace-nowrap">
                               <button type="button"
                                 class="edit-category-btn text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                                data-modal-toggle="edit-product-modal"
                                 data-id="<?= htmlspecialchars($id) ?>"
                                 data-name="<?= htmlspecialchars($name) ?>"
                                 data-description="<?= htmlspecialchars($description) ?>">
@@ -325,12 +327,17 @@ $categories = $stmt->fetchAll();
                                 </svg>
                                 Edit
                               </button>
-                              <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                              <button type="button"
+                                class="delete-category-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                                data-modal-toggle="delete-category-modal"
+                                data-id="<?= htmlspecialchars($id) ?>"
+                                data-name="<?= htmlspecialchars($name) ?>">
                                 <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                 </svg>
                                 Delete
                               </button>
+
                             </td>
                           </tr>
                         <?php
@@ -355,7 +362,6 @@ $categories = $stmt->fetchAll();
                     }
                     ?>
                   </tbody>
-
                   <!-- Add Product Modal -->
                   <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full" id="add-product-modal">
                     <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
@@ -395,35 +401,100 @@ $categories = $stmt->fetchAll();
                     </div>
                   </div>
 
-                  <!-- Delete Product Modal -->
-                  <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full" id="delete-product-modal">
-                    <div class="relative w-full max-w-md px-4 h-full md:h-auto">
+                  <!-- Edit Product Modal -->
+                  <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full" id="edit-product-modal">
+                    <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
                       <!-- Modal content -->
                       <div class="bg-white rounded-lg shadow relative">
                         <!-- Modal header -->
-                        <div class="flex justify-end p-2">
-                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="delete-product-modal">
+                        <div class="flex items-start justify-between p-5 border-b rounded-t">
+                          <h3 class="text-xl font-semibold">
+                            Edit Category
+                          </h3>
+                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="edit-product-modal">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
                           </button>
                         </div>
                         <!-- Modal body -->
-                        <div class="p-6 pt-0 text-center">
-                          <svg class="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                          </svg>
-                          <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you sure you want to delete this product?</h3>
-                          <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
-                            Yes, I'm sure
-                          </a>
-                          <a href="#" class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" data-modal-toggle="delete-product-modal">
-                            No, cancel
-                          </a>
+                        <div class="p-6 space-y-6">
+                          <form id="edit-category-form" method="post">
+                            <input type="hidden" name="id" id="edit-category-id">
+                            <div class="grid grid-cols-6 gap-6">
+                              <div class="col-span-6 sm:col-span-3">
+                                <label for="edit-category-name" class="text-sm font-medium text-gray-900 block mb-2">Category Name</label>
+                                <input type="text" name="name" id="edit-category-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Electronics" required>
+                              </div>
+                              <div class="col-span-full">
+                                <label for="edit-description" class="text-sm font-medium text-gray-900 block mb-2">Description</label>
+                                <textarea name="description" id="edit-description" rows="6" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Category description"></textarea>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="p-6 border-t border-gray-200 rounded-b">
+                          <button class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit" form="edit-category-form">Save Changes</button>
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  <!-- Delete Category Modal -->
+                  <div class="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full" id="delete-category-modal">
+                    <div class="relative w-full max-w-md px-4 h-full md:h-auto">
+                      <!-- Modal content -->
+                      <div class="bg-white rounded-lg shadow relative">
+
+                        <!-- Modal header -->
+                        <div class="flex items-start justify-between p-5 border-b rounded-t">
+                          <h3 class="text-xl font-semibold">
+                            Delete Category
+                          </h3>
+                          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                            data-modal-toggle="delete-category-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                            </svg>
+                          </button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6 text-center">
+                          <svg class="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+
+                          <p class="text-gray-600 text-lg mt-4">
+                            Are you sure you want to delete <br>
+                            <strong id="delete-category-name" class="text-gray-900"></strong>?
+                          </p>
+                          <p class="text-sm text-gray-500">This action cannot be undone.</p>
+
+                          <!-- Hidden ID -->
+                          <input type="hidden" id="delete-category-id">
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="p-6 border-t border-gray-200 rounded-b flex justify-end gap-2">
+                          <button type="button"
+                            class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                            data-modal-toggle="delete-category-modal">
+                            Cancel
+                          </button>
+                          <button id="confirm-delete-btn"
+                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Yes, Delete
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
       </main>
     </div>
   </div>
@@ -467,26 +538,26 @@ $categories = $stmt->fetchAll();
           row.setAttribute('data-category-id', data.category.id);
           row.innerHTML = `
                 <td class="p-4 w-4">
-    <div class="flex items-center">
-      <input type="checkbox" class="w-4 h-4 bg-gray-100 rounded border-gray-300">
-    </div>
-  </td>
-  <td class="p-4 text-sm font-normal text-gray-900 whitespace-nowrap category-name">${data.category.name}</td>
-  <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap category-description">${data.category.description || '-'}</td>
-  <td class="p-4 space-x-2 whitespace-nowrap">
-    <button type="button" 
-            class="edit-category-btn text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
-            data-id="${data.category.id}"
-            data-name="${data.category.name}"
-            data-description="${data.category.description || ''}">
-      <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
-      Edit
-    </button>
-    <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
-      <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-      Delete
-    </button>
-  </td>
+                  <div class="flex items-center">
+                    <input type="checkbox" class="w-4 h-4 bg-gray-100 rounded border-gray-300">
+                  </div>
+                </td>
+                <td class="p-4 text-sm font-normal text-gray-900 whitespace-nowrap category-name">${data.category.name}</td>
+                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap category-description">${data.category.description || '-'}</td>
+                <td class="p-4 space-x-2 whitespace-nowrap">
+                  <button type="button" 
+                          class="edit-category-btn text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                          data-id="${data.category.id}"
+                          data-name="${data.category.name}"
+                          data-description="${data.category.description || ''}">
+                    <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
+                    Edit
+                  </button>
+                  <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                    <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                    Delete
+                  </button>
+                </td>
             `;
           table.appendChild(row);
 
@@ -511,82 +582,15 @@ $categories = $stmt->fetchAll();
       });
   });
 </script>
-<!-- 
-<script>
-  // ===== EDIT CATEGORY =====
-  // Event delegation untuk button edit (termasuk yang baru ditambahkan via AJAX)
-  document.addEventListener('click', function(e) {
-    if (e.target.closest('.edit-category-btn')) {
-      const btn = e.target.closest('.edit-category-btn');
-      const id = btn.dataset.id;
-      const name = btn.dataset.name;
-      const description = btn.dataset.description;
-
-      // Isi form edit dengan data kategori
-      document.getElementById('edit-category-id').value = id;
-      document.getElementById('edit-category-name').value = name;
-      document.getElementById('edit-description').value = description;
-
-      // Tampilkan modal edit
-      document.getElementById('edit-product-modal').classList.remove('hidden');
-      document.getElementById('edit-product-modal').classList.add('flex');
-    }
-  });
-
-  // Submit form edit
-  document.getElementById('edit-category-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-    const categoryId = formData.get('id');
-
-    fetch('edit_category.php', {
-        method: 'POST',
-        body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log('Edit response:', data);
-
-        if (data.success) {
-          // Update baris tabel yang sesuai
-          const row = document.querySelector(`tr[data-category-id="${categoryId}"]`);
-
-          if (row) {
-            // Update nama dan deskripsi di tabel
-            row.querySelector('.category-name').textContent = data.category.name;
-            row.querySelector('.category-description').textContent = data.category.description || '-';
-
-            // Update data attribute pada button edit
-            const editBtn = row.querySelector('.edit-category-btn');
-            editBtn.dataset.name = data.category.name;
-            editBtn.dataset.description = data.category.description || '';
-          }
-
-          // Tutup modal
-          document.getElementById('edit-product-modal').classList.add('hidden');
-          document.getElementById('edit-product-modal').classList.remove('flex');
-
-          alert('Category updated successfully!');
-        } else {
-          alert('Failed to update category: ' + data.message);
-        }
-      })
-      .catch(err => {
-        console.error('Error:', err);
-        alert('An error occurred: ' + err.message);
-      });
-  });
-</script> -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Ready - Edit category script loaded');
-    
-    // Event delegation untuk button edit
+
+    // Event delegation untuk button edit - ISI FORM sebelum modal terbuka
     document.addEventListener('click', function(e) {
       if (e.target.closest('.edit-category-btn')) {
         console.log('Edit button clicked!');
-        
+
         const btn = e.target.closest('.edit-category-btn');
         const id = btn.dataset.id;
         const name = btn.dataset.name;
@@ -594,22 +598,20 @@ $categories = $stmt->fetchAll();
 
         console.log('Button data:', { id, name, description });
 
+        if (!id || id === '' || id === 'undefined') {
+          console.error('❌ Button data-id is EMPTY!');
+          alert('❌ Error: Category ID tidak ditemukan!');
+          e.preventDefault(); // Cegah modal terbuka
+          return;
+        }
+
         // Isi form edit dengan data kategori
         document.getElementById('edit-category-id').value = id;
         document.getElementById('edit-category-name').value = name;
         document.getElementById('edit-description').value = description;
 
-        // Tampilkan modal edit
-        const modal = document.getElementById('edit-product-modal');
-        
-        if (modal) {
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-          console.log('Modal opened');
-        } else {
-          console.error('Modal not found!');
-          alert('Modal edit tidak ditemukan! Pastikan modal dengan ID "edit-product-modal" ada di halaman.');
-        }
+        console.log('Form filled successfully');
+        // Modal akan terbuka otomatis oleh data-modal-toggle
       }
     });
 
@@ -618,10 +620,21 @@ $categories = $stmt->fetchAll();
     if (editForm) {
       editForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        console.log('Edit form submitted');
+        console.log('📝 Edit form submitted');
 
         const formData = new FormData(this);
         const categoryId = formData.get('id');
+        const categoryName = formData.get('name');
+
+        if (!categoryId || categoryId.trim() === '') {
+          alert('❌ Error: Category ID is empty!');
+          return;
+        }
+
+        if (!categoryName || categoryName.trim() === '') {
+          alert('❌ Error: Category name is required!');
+          return;
+        }
 
         fetch('edit_category.php', {
             method: 'POST',
@@ -629,7 +642,7 @@ $categories = $stmt->fetchAll();
           })
           .then(res => res.json())
           .then(data => {
-            console.log('Edit response:', data);
+            console.log('✅ Server response:', data);
 
             if (data.success) {
               const row = document.querySelector(`tr[data-category-id="${categoryId}"]`);
@@ -643,21 +656,111 @@ $categories = $stmt->fetchAll();
                 editBtn.dataset.description = data.category.description || '';
               }
 
-              document.getElementById('edit-product-modal').classList.add('hidden');
-              document.getElementById('edit-product-modal').classList.remove('flex');
+              // Tutup modal (backdrop akan tertutup otomatis)
+              const modal = document.getElementById('edit-product-modal');
+              const closeBtn = modal.querySelector('[data-modal-toggle="edit-product-modal"]');
+              if (closeBtn) {
+                closeBtn.click(); // Trigger close modal
+              }
 
-              alert('Category updated successfully!');
+              alert('✅ Category updated successfully!');
             } else {
-              alert('Failed to update category: ' + data.message);
+              alert('❌ Failed to update category: ' + data.message);
             }
           })
           .catch(err => {
-            console.error('Error:', err);
+            console.error('❌ Fetch error:', err);
             alert('An error occurred: ' + err.message);
           });
       });
-    } else {
-      console.error('Edit form not found!');
     }
   });
+</script>
+
+<script>
+  // ===== DELETE CATEGORY =====
+  console.log('Delete category script loaded');
+
+  // Event delegation untuk button delete - ISI DATA sebelum modal terbuka
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.delete-category-btn')) {
+      console.log('Delete button clicked!');
+
+      const btn = e.target.closest('.delete-category-btn');
+      const id = btn.dataset.id;
+      const name = btn.dataset.name;
+
+      console.log('Delete data:', { id, name });
+
+      if (!id) {
+        alert('❌ Error: Category ID not found!');
+        e.preventDefault(); // Cegah modal terbuka
+        return;
+      }
+
+      // Isi modal dengan data kategori
+      document.getElementById('delete-category-id').value = id;
+      document.getElementById('delete-category-name').textContent = name;
+
+      console.log('Delete modal data filled');
+      // Modal akan terbuka otomatis oleh data-modal-toggle
+    }
+  });
+
+  // Confirm delete button
+  const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener('click', function() {
+      const categoryId = document.getElementById('delete-category-id').value;
+      const categoryName = document.getElementById('delete-category-name').textContent;
+
+      if (!categoryId) {
+        alert('❌ Error: Category ID is missing!');
+        return;
+      }
+
+      console.log('Deleting category ID:', categoryId);
+
+      confirmDeleteBtn.disabled = true;
+      confirmDeleteBtn.textContent = 'Deleting...';
+
+      const formData = new FormData();
+      formData.append('id', categoryId);
+
+      fetch('delete_category.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          confirmDeleteBtn.disabled = false;
+          confirmDeleteBtn.textContent = 'Yes, Delete';
+
+          if (data.success) {
+            const row = document.querySelector(`tr[data-category-id="${categoryId}"]`);
+            if (row) {
+              row.remove();
+              console.log('✅ Row removed');
+            }
+
+            // Tutup modal (backdrop akan tertutup otomatis)
+            const modal = document.getElementById('delete-category-modal');
+            const closeBtn = modal.querySelector('[data-modal-toggle="delete-category-modal"]');
+            if (closeBtn) {
+              closeBtn.click(); // Trigger close modal
+            }
+
+            alert('✅ Category "' + categoryName + '" deleted successfully!');
+          } else {
+            alert('❌ Failed to delete category: ' + data.message);
+          }
+        })
+        .catch(err => {
+          console.error('❌ Delete error:', err);
+          confirmDeleteBtn.disabled = false;
+          confirmDeleteBtn.textContent = 'Yes, Delete';
+          alert('An error occurred: ' + err.message);
+        });
+    });
+  }
 </script>
