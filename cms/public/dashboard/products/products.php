@@ -177,7 +177,7 @@ $categories = $stmt->fetchAll();
                                 </a>
                             </li>
                             <li>
-                                <a href="../users/user.html" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <a href="../users/user.php" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                     <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                     </svg>
@@ -185,7 +185,7 @@ $categories = $stmt->fetchAll();
                                 </a>
                             </li>
                             <li>
-                                <a href="../products/product.html" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <a href="../products/products.php" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                     <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
                                     </svg>
@@ -193,7 +193,7 @@ $categories = $stmt->fetchAll();
                                 </a>
                             </li>
                             <li>
-                                <a href="../suppliers/supplier.html" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <a href="../suppliers/supplier.php" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                     <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
                                     </svg>
@@ -201,7 +201,7 @@ $categories = $stmt->fetchAll();
                                 </a>
                             </li>
                             <li>
-                                <a href="products.html" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <a href="../categories/category.php" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                     <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
                                     </svg>
@@ -414,9 +414,14 @@ $categories = $stmt->fetchAll();
                                                             </button>
 
                                                             <button type="button"
-                                                                class="delete-product-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2"
+                                                                class="delete-product-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
                                                                 data-id="<?= htmlspecialchars($id) ?>"
                                                                 data-name="<?= htmlspecialchars($name) ?>">
+
+                                                                <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                                </svg>
+
                                                                 Delete
                                                             </button>
                                                         </td>
@@ -510,7 +515,9 @@ $categories = $stmt->fetchAll();
                                 </form>
                             </div>
                             <div class="p-6 border-t border-gray-200 rounded-b">
-                                <button form="edit-product-form" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit">Update Product</button>
+                                <button type="button" id="btn-save-edit" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Update Product
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -617,16 +624,18 @@ $categories = $stmt->fetchAll();
                             </div>
                             <!-- Modal body -->
                             <div class="p-6 pt-0 text-center">
-                                <svg class="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-20 h-20 text-red-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">Are you sure you want to delete this product?</h3>
-                                <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
+
+                                <button id="btn-confirm-delete" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
                                     Yes, I'm sure
-                                </a>
-                                <a href="#" class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" data-modal-toggle="delete-product-modal">
+                                </button>
+
+                                <button type="button" class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" data-modal-toggle="delete-product-modal">
                                     No, cancel
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -644,16 +653,39 @@ $categories = $stmt->fetchAll();
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://themewagon.github.io/windster/app.bundle.js"></script>
 </body>
-
 <script>
+    // Variabel Global
+    let deleteProductId = null;
+    let deleteModal = null; // Kita siapkan variabel untuk objek Modal Flowbite
+
     document.addEventListener('DOMContentLoaded', function() {
         console.log("✅ Javascript Siap!");
-
-        // 1. Load Dropdown (Categories & Suppliers)
         loadDropdowns();
 
+        // === INISIALISASI MODAL DELETE (Supaya Backdrop Muncul) ===
+        const deleteModalEl = document.getElementById('delete-product-modal');
+        if (deleteModalEl) {
+            // Kita pakai fitur resmi Flowbite
+            // Pastikan script flowbite.js sudah diload di head/body
+            deleteModal = new Modal(deleteModalEl, {
+                placement: 'center',
+                backdrop: 'dynamic',
+                backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-40',
+                closable: true
+            });
+        }
+
+        // === LOGIKA TOMBOL CANCEL / SILANG DI MODAL DELETE ===
+        // Kita handle manual tutupnya biar rapi
+        const closeDeleteBtns = document.querySelectorAll('[data-modal-toggle="delete-product-modal"]');
+        closeDeleteBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (deleteModal) deleteModal.hide();
+            });
+        });
+
+
         // === BAGIAN ADD PRODUCT ===
-        // Reset form saat modal Add dibuka
         const openAddModalBtn = document.querySelector('[data-modal-toggle="add-product-modal"]');
         if (openAddModalBtn) {
             openAddModalBtn.addEventListener('click', function() {
@@ -663,7 +695,6 @@ $categories = $stmt->fetchAll();
             });
         }
 
-        // Preview Image (Add Product)
         const imageInput = document.getElementById('image');
         if (imageInput) {
             imageInput.addEventListener('change', function(e) {
@@ -679,7 +710,6 @@ $categories = $stmt->fetchAll();
             });
         }
 
-        // Tombol Save Add Product (Manual Trigger)
         const btnSaveAdd = document.getElementById('btn-save-add');
         if (btnSaveAdd) {
             btnSaveAdd.addEventListener('click', function() {
@@ -692,41 +722,90 @@ $categories = $stmt->fetchAll();
             });
         }
 
-        // === BAGIAN EDIT PRODUCT ===
-        // Listener Tombol Edit di Tabel (Event Delegation)
+        // === BAGIAN EDIT & DELETE PRODUCT ===
         document.addEventListener('click', function(e) {
-            // Cari tombol edit terdekat yang diklik
-            const btn = e.target.closest('.edit-product-btn');
-            
-            if (btn) {
-                // Ambil data dari atribut tombol
-                const id = btn.dataset.id;
-                const name = btn.dataset.name;
-                const sku = btn.dataset.sku;
-                const price = btn.dataset.price;
-                const stock = btn.dataset.stock;
-                const catId = btn.dataset.categoryId;
-                const supId = btn.dataset.supplierId;
+            const btnEdit = e.target.closest('.edit-product-btn');
+            const btnDelete = e.target.closest('.delete-product-btn');
 
-                // Isi form Edit
-                document.getElementById('edit_id').value = id;
-                document.getElementById('edit_name').value = name;
-                document.getElementById('edit_sku').value = sku;
-                document.getElementById('edit_price').value = price;
-                document.getElementById('edit_stock').value = stock;
-                
-                // Set Dropdown (Pilih opsi sesuai ID)
-                document.getElementById('edit_category').value = catId;
-                document.getElementById('edit_supplier').value = supId;
+            // --- TOMBOL EDIT ---
+            if (btnEdit) {
+                document.getElementById('edit_id').value = btnEdit.dataset.id;
+                document.getElementById('edit_name').value = btnEdit.dataset.name;
+                document.getElementById('edit_sku').value = btnEdit.dataset.sku;
+                document.getElementById('edit_price').value = btnEdit.dataset.price;
+                document.getElementById('edit_stock').value = btnEdit.dataset.stock;
+                document.getElementById('edit_category').value = btnEdit.dataset.categoryId;
+                document.getElementById('edit_supplier').value = btnEdit.dataset.supplierId;
+            }
+
+            // --- TOMBOL DELETE (PERBAIKAN DI SINI) ---
+            if (btnDelete) {
+                deleteProductId = btnDelete.dataset.id;
+                console.log("Mau hapus ID:", deleteProductId);
+
+                // GUNAKAN FUNGSI RESMI FLOWBITE: show()
+                // Ini yang bikin layar jadi abu-abu otomatis
+                if (deleteModal) {
+                    deleteModal.show();
+                } else {
+                    // Fallback kalau Flowbite gagal load
+                    const m = document.getElementById('delete-product-modal');
+                    m.classList.remove('hidden');
+                    m.classList.add('flex');
+                }
             }
         });
 
-        // Submit Form Edit
-        const editForm = document.getElementById('edit-product-form');
-        if (editForm) {
-            editForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                handleFormSubmit(this, 'edit_product.php');
+        // Tombol Save Edit
+        const btnSaveEdit = document.getElementById('btn-save-edit');
+        if (btnSaveEdit) {
+            btnSaveEdit.addEventListener('click', function() {
+                const form = document.getElementById('edit-product-form');
+                if (form && form.checkValidity()) {
+                    handleFormSubmit(form, 'edit_product.php');
+                } else {
+                    form.reportValidity();
+                }
+            });
+        }
+
+        // === TOMBOL KONFIRMASI DELETE (YES) ===
+        const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+        if (btnConfirmDelete) {
+            btnConfirmDelete.addEventListener('click', async function() {
+                if (!deleteProductId) return;
+
+                const originalText = this.innerHTML;
+                this.disabled = true;
+                this.innerHTML = 'Deleting...';
+
+                try {
+                    const formData = new FormData();
+                    formData.append('id_product', deleteProductId);
+
+                    const response = await fetch('delete_product.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const text = await response.text();
+                    const data = JSON.parse(text);
+
+                    if (data.success) {
+                        alert('✅ Produk berhasil dihapus!');
+                        location.reload();
+                    } else {
+                        alert('❌ Gagal hapus: ' + data.message);
+                        if (deleteModal) deleteModal.hide(); // Tutup modal kalau gagal
+                    }
+                } catch (error) {
+                    console.error("Delete Error:", error);
+                    alert('❌ Terjadi kesalahan server.');
+                    if (deleteModal) deleteModal.hide();
+                } finally {
+                    this.disabled = false;
+                    this.innerHTML = originalText;
+                }
             });
         }
     });
@@ -734,18 +813,16 @@ $categories = $stmt->fetchAll();
     // === FUNGSI UMUM KIRIM DATA ===
     async function handleFormSubmit(form, url) {
         const formData = new FormData(form);
-        
-        // Tentukan tombol mana yang loading
         let btn;
-        if (form.id === 'add-product-form') {
-            btn = document.getElementById('btn-save-add');
-        } else {
-            btn = form.querySelector('button[type="submit"]');
-        }
+        if (form.id === 'add-product-form') btn = document.getElementById('btn-save-add');
+        else if (form.id === 'edit-product-form') btn = document.getElementById('btn-save-edit');
 
-        const originalText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+        let originalText = '';
+        if (btn) {
+            originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+        }
 
         try {
             const response = await fetch(url, {
@@ -765,7 +842,7 @@ $categories = $stmt->fetchAll();
             console.error('Error:', error);
             alert('❌ Terjadi kesalahan sistem.');
         } finally {
-            if(btn) {
+            if (btn) {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
             }
@@ -775,29 +852,23 @@ $categories = $stmt->fetchAll();
     // === LOAD DROPDOWNS ===
     async function loadDropdowns() {
         try {
-            // Categories
             const resCat = await fetch('get_categories.php');
             const dataCat = await resCat.json();
             let catOpts = '<option value="">Select Category</option>';
             if (dataCat.success) dataCat.categories.forEach(c => catOpts += `<option value="${c.id_category}">${c.name}</option>`);
-            
-            if(document.getElementById('add_category')) document.getElementById('add_category').innerHTML = catOpts;
-            if(document.getElementById('edit_category')) document.getElementById('edit_category').innerHTML = catOpts;
 
-            // Suppliers
+            if (document.getElementById('add_category')) document.getElementById('add_category').innerHTML = catOpts;
+            if (document.getElementById('edit_category')) document.getElementById('edit_category').innerHTML = catOpts;
+
             const resSup = await fetch('get_suppliers.php');
             const dataSup = await resSup.json();
             let supOpts = '<option value="">Select Supplier</option>';
             if (dataSup.success) dataSup.suppliers.forEach(s => supOpts += `<option value="${s.id_supplier}">${s.name}</option>`);
-            
-            if(document.getElementById('add_supplier')) document.getElementById('add_supplier').innerHTML = supOpts;
-            if(document.getElementById('edit_supplier')) document.getElementById('edit_supplier').innerHTML = supOpts;
 
+            if (document.getElementById('add_supplier')) document.getElementById('add_supplier').innerHTML = supOpts;
+            if (document.getElementById('edit_supplier')) document.getElementById('edit_supplier').innerHTML = supOpts;
         } catch (err) {
             console.error('Gagal load dropdown:', err);
         }
     }
 </script>
-
-
-</html>
